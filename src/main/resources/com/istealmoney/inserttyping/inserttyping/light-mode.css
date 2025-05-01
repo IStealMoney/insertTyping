@@ -1,0 +1,77 @@
+.root {
+    -fx-base: grey;
+    -fx-background: lightgrey;
+    -fx-control-inner-background: #e4e1e1;
+}
+
+.header-section {
+    -fx-padding: 10px;
+    -fx-font-size: 20px;
+    -fx-background-color: white;
+}
+
+.button {
+    -fx-background-color: #e4e1e1;
+    -fx-text-fill: black;
+    -fx-border-color: grey;
+}
+
+.button:hover {
+    -fx-background-color: #5f6c93;
+    -fx-border-color: white;
+}
+
+.button:pressed {
+    -fx-background-color: #495479;
+    -fx-translate-y: 1px;
+}
+
+.label {
+    -fx-text-fill: black;
+    -fx-background-color: lightgrey;
+    -fx-border-color: lightgrey;
+}
+
+.text-field {
+    -fx-background-color: #e4e1e1;
+    -fx-text-fill: black;
+    -fx-border-color: grey;
+}
+
+.text-field:focused {
+    -fx-background-color: lightgrey;
+    -fx-border-color: grey;
+    -fx-border-width: 2px;
+}
+
+.text-area {
+    -fx-background-color: grey;
+    -fx-border-color: lightgrey;
+}
+
+.combo-box {
+    -fx-background-color: grey;
+    -fx-text-fill: black;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: lightgrey;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #5f6c93;
+}
+
+.split-pane {
+    -fx-background-color: white;
+}
+
+.label {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: white;
+}
+
+.menu-bar:pressed {
+    -fx-background-color: #6d469d;
+}

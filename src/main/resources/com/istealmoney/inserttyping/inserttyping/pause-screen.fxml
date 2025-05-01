@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istealmoney.inserttyping.inserttyping.PauseScreenController">
+   <children>
+      <Button fx:id="continueBtn" layoutX="325.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleContinueBtn" prefHeight="50.0" prefWidth="150.0" text="CONTINUE" textAlignment="CENTER">
+         <font>
+            <Font name="Fira Code Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="quitBtn" layoutX="325.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleQuitBtn" prefHeight="50.0" prefWidth="150.0" text="QUIT">
+         <font>
+            <Font name="Fira Code Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="retryBtn" layoutX="325.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleRetryBtn" prefHeight="50.0" prefWidth="150.0" text="RETRY">
+         <font>
+             <Font name="Fira Code Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="homeBtn" layoutX="325.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleHomeBtn" prefHeight="50.0" prefWidth="150.0" text="HOME">
+         <font>
+             <Font name="Fira Code Bold" size="20.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
