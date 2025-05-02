@@ -13,16 +13,17 @@
 .button {
     -fx-background-color: #e4e1e1;
     -fx-text-fill: black;
-    -fx-border-color: grey;
+    -fx-border-color: #4b6eaf;
+    -fx-border-width: 2;
 }
 
 .button:hover {
-    -fx-background-color: #5f6c93;
-    -fx-border-color: white;
+    -fx-background-color: #4b6eaf;
+    -fx-border-color: black;
 }
 
 .button:pressed {
-    -fx-background-color: #495479;
+    -fx-background-color: #4b6eaf;
     -fx-translate-y: 1px;
 }
 
@@ -32,26 +33,22 @@
     -fx-border-color: lightgrey;
 }
 
-.text-field {
-    -fx-background-color: #e4e1e1;
-    -fx-text-fill: black;
-    -fx-border-color: grey;
-}
-
-.text-field:focused {
-    -fx-background-color: lightgrey;
-    -fx-border-color: grey;
-    -fx-border-width: 2px;
-}
-
 .text-area {
-    -fx-background-color: grey;
-    -fx-border-color: lightgrey;
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: #4b6eaf;
+}
+
+.text-area:focused {
+    -fx-background-color: lightgrey;
+    -fx-border-color: #4b6eaf;
+    -fx-border-width: 2px;
 }
 
 .combo-box {
     -fx-background-color: grey;
     -fx-text-fill: black;
+    -fx-border-color: #4b6eaf;
 }
 
 .combo-box .arrow-button {
@@ -59,17 +56,11 @@
 }
 
 .combo-box .list-cell:hover {
-    -fx-background-color: #5f6c93;
+    -fx-background-color: #4b6eaf;
 }
 
 .split-pane {
     -fx-background-color: white;
-}
-
-.label {
-    -fx-background-color: white;
-    -fx-text-fill: black;
-    -fx-border-color: white;
 }
 
 .menu-bar:pressed {

@@ -9,17 +9,17 @@ public class PauseScreenController {
 
     @FXML
     private void handleContinueBtn() throws IOException { //save data?
-        main.swithcScene("game-screen.fxml");
+        main.switchScene("game-screen.fxml");
     }
 
     @FXML
     private void handleRetryBtn() throws IOException {
-        main.swithcScene("game-screen.fxml");
+        main.switchScene("game-screen.fxml");
     }
 
     @FXML
     private void handleHomeBtn() throws IOException {
-        main.swithcScene("start-screen.fxml");
+        main.switchScene("start-screen.fxml");
     }
 
     @FXML

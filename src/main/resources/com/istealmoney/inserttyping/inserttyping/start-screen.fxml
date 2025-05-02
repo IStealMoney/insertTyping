@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istealmoney.inserttyping.inserttyping.StartScreenController">
    <children>
-      <Label fx:id="labelInsert" layoutX="25.0" layoutY="35.0" prefHeight="25.0" prefWidth="375.0" text="Insert your text here:">
+      <Label fx:id="labelInsert" layoutX="25.0" layoutY="35.0" prefHeight="35.0" prefWidth="354.0" text="Insert your text here:">
          <font>
             <Font name="Fira Code Bold" size="26.0" />
          </font></Label>
@@ -26,8 +25,4 @@
          </font>
       </Button>
    </children>
-   <stylesheets>
-      <URL value="@light-mode.css" />
-      <URL value="@dark-mode.css" />
-   </stylesheets>
 </AnchorPane>

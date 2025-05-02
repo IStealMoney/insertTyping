@@ -11,11 +11,15 @@
             <Font name="Fira Code Bold" size="13.0" />
          </font>
       </Button>
-      <ComboBox layoutX="25.0" layoutY="100.0" prefWidth="150.0" />
-      <Label layoutX="25.0" layoutY="48.0" prefHeight="18.0" prefWidth="202.0" text="switch your theme:">
+      <ComboBox fx:id="comboTheme" layoutX="25.0" layoutY="100.0" prefWidth="150.0" />
+      <Label layoutX="25.0" layoutY="48.0" prefHeight="26.0" prefWidth="231.0" text="switch your theme:">
         <font>
-           <Font name="Fira Code Bold" size="13.0" />
+           <Font name="Fira Code Bold" size="20.0" />
         </font>
         </Label>
+      <Button fx:id="applyBtn" layoutX="25.0" layoutY="148.0" mnemonicParsing="false" onAction="#handleApplyBtn" text="apply">
+       <font>
+           <Font name="Fira Code Bold" size="13.0" />
+       </font></Button>
    </children>
 </Pane>

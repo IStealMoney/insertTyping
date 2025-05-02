@@ -18,16 +18,16 @@ public class StartScreenController {
 
     @FXML
     public void handleSettingsBtn() throws IOException {
-        Main main = new Main();
-        main.swithcScene("settings-menu.fxml");
+        Main main = Main.getInstance();
+        main.switchScene("settings-menu.fxml");
     }
 
     @FXML
     public void handleStartTyping() throws IOException {
         insertedTxt = getInsertedText();
         if (makeTxtRdy(insertedTxt)) { // check length ... make txt playable :)
-            Main main = new Main();
-            main.swithcScene("game-screen.fxml");
+            Main main = Main.getInstance();
+            main.switchScene("game-screen.fxml");
         } else {
             System.out.println("txt is not ready yet!");
         }
