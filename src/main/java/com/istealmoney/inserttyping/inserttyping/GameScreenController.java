@@ -1,5 +1,6 @@
 package com.istealmoney.inserttyping.inserttyping;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -7,14 +8,26 @@ import javafx.scene.input.KeyCode;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class GameScreenController {
 
-    @FXML javafx.scene.control.Label fisrtLabel = new javafx.scene.control.Label();
-    @FXML javafx.scene.control.Label secondLabel = new javafx.scene.control.Label();
-    @FXML TextField gameField = new TextField();
+    @FXML
+    javafx.scene.control.Label fisrtLabel = new javafx.scene.control.Label();
+
+    @FXML
+    javafx.scene.control.Label secondLabel = new javafx.scene.control.Label();
+
+    @FXML
+    TextField gameField = new TextField();
+
+    @FXML
+    public void handleSettingsBtn() throws IOException {
+        Main main = new Main();
+        main.swithcScene("settings-menu.fxml");
+    }
 
     public GameScreenController() {
         initialize();
@@ -33,4 +46,6 @@ public class GameScreenController {
 
         return true;
     }
+
+
 }

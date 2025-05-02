@@ -3,12 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
+<?import javafx.scene.text.Font?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istealmoney.inserttyping.inserttyping.GameScreenController">
    <children>
       <Label fx:id="firstLabel" layoutX="342.0" layoutY="182.0" text="First word" />
       <Label fx:id="secondLabel" layoutX="482.0" layoutY="182.0" text="Second word" />
       <TextField fx:id="gameField" layoutX="319.0" layoutY="274.0" />
-      <ToggleButton layoutX="675.0" layoutY="40.0" mnemonicParsing="false" text="switch theme" />
+      <Button fx:id="settingsBtn" layoutX="670.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleSettingsBtn" prefHeight="30.0" prefWidth="100.0" text="settings">
+         <font>
+            <Font name="Fira Code Bold" size="13.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

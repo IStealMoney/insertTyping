@@ -1,23 +1,29 @@
 package com.istealmoney.inserttyping.inserttyping;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+
 import java.io.IOException;
 
 public class StartScreenController {
     private String insertedTxt;
-    @FXML private TextArea insertionField = new TextArea();
+    @FXML
+    private TextArea insertionField = new TextArea();
 
-    @FXML private void initialize() {
+    @FXML
+    private void initialize() {
         insertionField.setEditable(true);
         insertionField.setPromptText("Type your text here...");
     }
 
-    @FXML public void handleThemeButton() {
+    @FXML
+    public void handleSettingsBtn() throws IOException {
         Main main = new Main();
-        main.switchTheme();
+        main.swithcScene("settings-menu.fxml");
     }
 
-    @FXML public void handleStartTyping() throws IOException {
+    @FXML
+    public void handleStartTyping() throws IOException {
         insertedTxt = getInsertedText();
         if (makeTxtRdy(insertedTxt)) { // check length ... make txt playable :)
             Main main = new Main();
@@ -27,14 +33,15 @@ public class StartScreenController {
         }
     }
 
-    @FXML public void handleClearBtn() {
+    @FXML
+    public void handleClearBtn() {
         insertionField.clear();
     }
 
     public boolean makeTxtRdy(String insertedTxt) {
         char[] insertedChar = new char[insertedTxt.length()];
         if (!insertedTxt.isEmpty() && insertedTxt.length() < 2500) { // some checks
-            for (int i = 0; i < insertedTxt.length()-1; i++) {    // transform String to a char array
+            for (int i = 0; i < insertedTxt.length() - 1; i++) {    // transform String to a char array
                 insertedChar[i] = insertedTxt.charAt(i);
             }
             return true;

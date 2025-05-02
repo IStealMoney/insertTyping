@@ -11,12 +11,13 @@ public class Main extends Application {
     private static Stage stage;
     public static boolean isLightMode = true;
     public String styleSheet = "light-mode.css";
-    public static String currentScene;
+    public static String lastScene, currentScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         swithcScene("start-screen.fxml");
+        currentScene = "start-screen.fxml";
     }
 
     public static void main(String[] args) {
@@ -27,26 +28,29 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(fxml));
         Parent guiRoot = loader.load();
         //guiRoot.getStylesheets().add(getClass().getResource(themeSwitcher).toExternalForm());
+        lastScene = currentScene;
         try {
+            scene = new Scene(guiRoot, 800, 600);
             if (fxml.equals("start-screen.fxml")) {
-                scene = new Scene(guiRoot, 800, 600);
                 currentScene = "start-screen";
+                stage.setTitle("InsertTyping | start");
             } else if (fxml.equals("game-screen.fxml")) {
-                scene = new Scene(guiRoot, 800, 600);
                 currentScene = "game-screen.fxml";
-
+                stage.setTitle("InsertTyping | game");
             } else if (fxml.equals("pause-screen")) {
-                scene = new Scene(guiRoot, 800, 600);
                 currentScene = "pause-screen";
+                stage.setTitle("InsertTyping | pause");
+            } else if (fxml.equals("settings-menu.fxml")) {
+                currentScene = "settings-menu.fxml";
+                stage.setTitle("InsertTyping | settings");
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading FXML file: " + fxml);
         }
-        stage.setTitle("InsertTyping!");
         stage.setResizable(false);
-        stage.setScene(scene);
         switchTheme();
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -57,10 +61,10 @@ public class Main extends Application {
         } else {
             styleSheet = "light-mode.css";
         }
-        reloadTheme();
+        reloadTheme(styleSheet);
     }
 
-    public void reloadTheme() {
+    public void reloadTheme(String styleSheet) {
         scene.getStylesheets().clear();
         scene.getStylesheets().add(getClass().getResource(styleSheet).toExternalForm());
     }
