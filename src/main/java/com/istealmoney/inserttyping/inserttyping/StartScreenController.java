@@ -6,7 +6,8 @@ import javafx.scene.control.TextArea;
 import java.io.IOException;
 
 public class StartScreenController {
-    private String insertedTxt;
+    public static String insertedTxt;
+
     @FXML
     private TextArea insertionField = new TextArea();
 
@@ -25,7 +26,7 @@ public class StartScreenController {
     @FXML
     public void handleStartTyping() throws IOException {
         insertedTxt = getInsertedText();
-        if (makeTxtRdy(insertedTxt)) { // check length ... make txt playable :)
+        if (checkTxt(insertedTxt)) { // check length ... make txt playable :)
             Main main = Main.getInstance();
             main.switchScene("game-screen.fxml");
         } else {
@@ -38,12 +39,8 @@ public class StartScreenController {
         insertionField.clear();
     }
 
-    public boolean makeTxtRdy(String insertedTxt) {
-        char[] insertedChar = new char[insertedTxt.length()];
+    public boolean checkTxt(String insertedTxt) {
         if (!insertedTxt.isEmpty() && insertedTxt.length() < 2500) { // some checks
-            for (int i = 0; i < insertedTxt.length() - 1; i++) {    // transform String to a char array
-                insertedChar[i] = insertedTxt.charAt(i);
-            }
             return true;
         } else {
             return false;
