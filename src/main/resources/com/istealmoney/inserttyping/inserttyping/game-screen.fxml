@@ -6,8 +6,10 @@
 
 <Pane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istealmoney.inserttyping.inserttyping.GameScreenController">
    <children>
-      <Label fx:id="firstLabel" layoutX="342.0" layoutY="182.0" text="First word" />
-      <Label fx:id="secondLabel" layoutX="482.0" layoutY="182.0" text="Second word" />
+      <Label fx:id="firstLabel" layoutX="325.0" layoutY="200.0" prefHeight="26.0" prefWidth="150.0" text="QWER">
+         <font>
+            <Font name="Fira Code Bold" size="20.0" />
+         </font></Label>
       <Button fx:id="settingsBtn" layoutX="670.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleSettingsBtn" prefHeight="30.0" prefWidth="100.0" text="settings">
          <font>
             <Font name="Fira Code Bold" size="13.0" />

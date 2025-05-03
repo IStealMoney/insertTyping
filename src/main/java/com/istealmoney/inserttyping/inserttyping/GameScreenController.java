@@ -14,14 +14,12 @@ import static com.istealmoney.inserttyping.inserttyping.StartScreenController.in
 public class GameScreenController {
     private boolean gameIsRunning = false;
     private static char[] insertedChar;
-    private String keyInpChar;
+    private String keyInpStr;
+    private char keyInpChar;
     private int progressI = 0;
 
     @FXML
-    javafx.scene.control.Label fisrtLabel = new javafx.scene.control.Label();
-
-    @FXML
-    javafx.scene.control.Label secondLabel = new javafx.scene.control.Label();
+    javafx.scene.control.Label firstLabel = new javafx.scene.control.Label();
 
     @FXML
     Pane gamePane = new Pane();
@@ -39,31 +37,51 @@ public class GameScreenController {
     }
 
     private void handleKeyPressed(javafx.scene.input.KeyEvent keyEvent) {
-        keyInpChar = keyEvent.getCode().toString();
+        keyInpStr = keyEvent.getCode().toString();
+        keyInpChar = keyInpStr.charAt(0);
         System.out.println(keyInpChar);
-        if ((keyEvent.getCode() == KeyCode.S) && !gameIsRunning) {    //start game
-            System.out.println("Game starts now!");
-            gameIsRunning = true;
-        }
         if (gameIsRunning) {
-            isRightInput(keyInpChar);
+            if (isRightInput(keyInpChar)) {
+                System.out.println("nice");
+            }
+            if (progressI == insertedTxt.length()) { // user finished typing text
+                txtFinished();
+            }
+        } else if ((keyEvent.getCode() == KeyCode.S) && !gameIsRunning) {    //start game
+            System.out.println("Game starts now!");
+            updateLabel(insertedChar);
+            gameIsRunning = true;
         }
     }
 
     private char[] makeTxtReady() {
         char[] insertedChar = new char[insertedTxt.length()];
-        for (int i = 0; i < insertedTxt.length() - 1; i++) {    // transform String to a char array
+        for (int i = 0; i < insertedTxt.length(); i++) {    // transform String to a char array
             insertedChar[i] = insertedTxt.charAt(i);
         }
         return insertedChar;
     }
 
-    private boolean isRightInput(String keyInpChar) {
-        for (int i = 0; i < insertedTxt.length()-1; i++) {
-            if (keyInpChar.equals((insertedChar[i]))) {
-
-            }
+    private boolean isRightInput(char keyInpChar) {
+        System.out.println("You typed: " + keyInpChar);
+        System.out.println("I want:" + insertedChar[progressI]);
+        if (keyInpChar == insertedChar[progressI]) {
+            System.out.println("right input");
+            progressI++;
+            updateLabel(insertedChar);
+            return true;
+        } else {
+            System.out.println("wrong input");
         }
-        return true;
+        return false;
+    }
+
+    private void updateLabel(char[] insertedChar) {
+        firstLabel.setText(String.valueOf(insertedChar));
+    }
+
+    private void txtFinished() {
+        firstLabel.setText("Stats"); // copy button?
+        //System.exit(0);
     }
 }
