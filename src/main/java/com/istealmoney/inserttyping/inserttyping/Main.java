@@ -47,6 +47,9 @@ public class Main extends Application {
             } else if (fxml.equals("settings-menu.fxml")) {
                 currentScene = "settings-menu.fxml";
                 stage.setTitle("InsertTyping | settings");
+            } else if (fxml.equals("game-finished-screen.fxml")) {
+                currentScene = "game-finished-screen.fxml";
+                stage.setTitle("InsertTyping | finished");
             }
         } catch (Exception e) {
             e.printStackTrace();

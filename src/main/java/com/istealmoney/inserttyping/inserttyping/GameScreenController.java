@@ -40,17 +40,22 @@ public class GameScreenController {
         keyInpStr = keyEvent.getCode().toString();
         keyInpChar = keyInpStr.charAt(0);
         System.out.println(keyInpChar);
-        if (gameIsRunning) {
-            if (isRightInput(keyInpChar)) {
-                System.out.println("nice");
+        try {
+            if (gameIsRunning) {
+                if (isRightInput(keyInpChar)) {
+                    System.out.println("nice");
+                }
+                if (progressI == insertedTxt.length()) { // user finished typing text
+                    Main main = Main.getInstance();
+                    main.switchScene("game-finished-screen.fxml");
+                }
+            } else if ((keyEvent.getCode() == KeyCode.S) && !gameIsRunning) {    //start game
+                System.out.println("Game starts now!");
+                updateLabel(insertedChar);
+                gameIsRunning = true;
             }
-            if (progressI == insertedTxt.length()) { // user finished typing text
-                txtFinished();
-            }
-        } else if ((keyEvent.getCode() == KeyCode.S) && !gameIsRunning) {    //start game
-            System.out.println("Game starts now!");
-            updateLabel(insertedChar);
-            gameIsRunning = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -78,10 +83,5 @@ public class GameScreenController {
 
     private void updateLabel(char[] insertedChar) {
         firstLabel.setText(String.valueOf(insertedChar));
-    }
-
-    private void txtFinished() {
-        firstLabel.setText("Stats"); // copy button?
-        //System.exit(0);
     }
 }
