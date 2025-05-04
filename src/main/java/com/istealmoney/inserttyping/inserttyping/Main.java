@@ -55,7 +55,7 @@ public class Main extends Application {
             e.printStackTrace();
             System.out.println("Error loading FXML file: " + fxml);
         }
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setScene(scene);
         stage.show();
     }

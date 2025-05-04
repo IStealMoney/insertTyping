@@ -5,10 +5,10 @@ import javafx.scene.control.Label;
 
 public class GameFinishedScreenController {
 
-    private int tMist;
+    private int tMist = 0;
 
     @FXML
-    public Label typingMistakes;
+    private Label typingMistakes;
 
     public GameFinishedScreenController() {
 
@@ -23,6 +23,5 @@ public class GameFinishedScreenController {
         GameScreenController gaScrCon = GameScreenController.getInstance();
         tMist = gaScrCon.getMistakes();
         typingMistakes.setText("Your typing mistakes: " + tMist);
-
     }
 }

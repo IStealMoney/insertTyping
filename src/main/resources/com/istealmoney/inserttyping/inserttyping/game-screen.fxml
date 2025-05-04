@@ -15,7 +15,12 @@
             <Font name="Fira Code Bold" size="13.0" />
          </font>
       </Button>
-      <Label fx:id="InstrLabel" layoutX="25.0" layoutY="35.0" text="Press space to start">
+      <Label fx:id="startLabel" layoutX="25.0" layoutY="35.0" text="Press space to start">
+         <font>
+            <Font name="Fira Code Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="typos" layoutX="200.0" layoutY="35.0">
          <font>
             <Font name="Fira Code Bold" size="20.0" />
          </font>
