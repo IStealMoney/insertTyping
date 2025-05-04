@@ -6,21 +6,30 @@
 
 <Pane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istealmoney.inserttyping.inserttyping.GameScreenController">
    <children>
-      <Label fx:id="firstLabel" layoutX="325.0" layoutY="200.0" prefHeight="26.0" prefWidth="150.0" text="QWER">
+      <Label fx:id="firstLabel" alignment="CENTER_RIGHT" layoutX="19.0" layoutY="200.0" prefHeight="30.0" prefWidth="420.0" textAlignment="CENTER">
          <font>
             <Font name="Fira Code Bold" size="20.0" />
          </font></Label>
-      <Button fx:id="settingsBtn" layoutX="670.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleSettingsBtn" prefHeight="30.0" prefWidth="100.0" text="settings">
+      <Label fx:id="secondLabel" disable="true" layoutX="465.0" layoutY="200.0" prefHeight="30.0" prefWidth="325.0" textAlignment="CENTER">
+         <font>
+            <Font name="Fira Code Bold" size="17.0" />
+         </font></Label>
+      <Button fx:id="settingsBtn" layoutX="670.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleSettingsBtn" prefHeight="30.0" prefWidth="100.0" text="settings">
          <font>
             <Font name="Fira Code Bold" size="13.0" />
          </font>
       </Button>
-      <Label fx:id="startLabel" layoutX="25.0" layoutY="35.0" text="Press space to start">
+      <Label fx:id="startLabel" layoutX="220.0" layoutY="240.0" text="Press space to start!">
+         <font>
+            <Font name="Fira Code Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="typos" layoutX="25.0" layoutY="25.0">
          <font>
             <Font name="Fira Code Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="typos" layoutX="200.0" layoutY="35.0">
+      <Label fx:id="userInputLabel" layoutX="380.0" layoutY="300.0" prefHeight="30.0" prefWidth="30.0">
          <font>
             <Font name="Fira Code Bold" size="20.0" />
          </font>

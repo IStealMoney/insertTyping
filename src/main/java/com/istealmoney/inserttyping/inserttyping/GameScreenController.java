@@ -29,10 +29,16 @@ public class GameScreenController {
     private javafx.scene.control.Label firstLabel = new javafx.scene.control.Label();
 
     @FXML
+    private javafx.scene.control.Label secondLabel = new javafx.scene.control.Label();
+
+    @FXML
     private javafx.scene.control.Label startLabel = new javafx.scene.control.Label();
 
     @FXML
     private javafx.scene.control.Label typos = new javafx.scene.control.Label();
+
+    @FXML
+    private javafx.scene.control.Label userInputLabel = new javafx.scene.control.Label();
 
     public GameScreenController() {
         instance = this;
@@ -72,6 +78,7 @@ public class GameScreenController {
     private void handleKeyPressed(javafx.scene.input.KeyEvent keyEvent) {
         String keyInpStr = keyEvent.getText();
         keyInpChar = keyInpStr.charAt(0);
+        updateUserInputLabel(keyInpChar);
         if (keyEvent.getCode() == KeyCode.SPACE) {  // space is handled in initialize()
             keyEvent.consume();
         }
@@ -85,6 +92,10 @@ public class GameScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateUserInputLabel(char key) {
+        userInputLabel.setText(String.valueOf(key));
     }
 
     private char[] makeTxtReady() {

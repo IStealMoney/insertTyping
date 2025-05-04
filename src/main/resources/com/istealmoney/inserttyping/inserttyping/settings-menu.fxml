@@ -11,8 +11,8 @@
             <Font name="Fira Code Bold" size="13.0" />
          </font>
       </Button>
-      <ComboBox fx:id="comboTheme" layoutX="25.0" layoutY="100.0" prefWidth="150.0" />
-      <Label layoutX="25.0" layoutY="50.0" prefHeight="26.0" prefWidth="231.0" text="switch your theme:">
+      <ComboBox fx:id="comboTheme" layoutX="25.0" layoutY="75.0" prefWidth="150.0" />
+      <Label layoutX="25.0" layoutY="25.0" prefHeight="26.0" prefWidth="231.0" text="switch your theme:">
         <font>
            <Font name="Fira Code Bold" size="20.0" />
         </font>
@@ -21,17 +21,17 @@
        <font>
            <Font name="Fira Code Bold" size="13.0" />
        </font></Button>
-      <Label layoutX="425.0" layoutY="50.0" prefHeight="29.0" prefWidth="323.0" text="choose which progress is shown:">
+      <Label layoutX="425.0" layoutY="25.0" prefHeight="29.0" prefWidth="321.0" text="statistics:">
          <font>
             <Font name="Fira Code Bold" size="20.0" />
          </font>
       </Label>
-      <CheckBox fx:id="tMistCB" layoutX="425.0" layoutY="100.0" mnemonicParsing="false" text="typing mistakes">
+      <CheckBox fx:id="tMistCB" layoutX="425.0" layoutY="75.0" mnemonicParsing="false" text="typing mistakes">
          <font>
             <Font name="Fira Code Bold" size="16.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="proBarCB" layoutX="425.0" layoutY="150.0" mnemonicParsing="false" text="progress bar">
+      <CheckBox fx:id="proBarCB" layoutX="425.0" layoutY="125.0" mnemonicParsing="false" text="progress bar">
          <font>
             <Font name="Fira Code Bold" size="16.0" />
          </font>

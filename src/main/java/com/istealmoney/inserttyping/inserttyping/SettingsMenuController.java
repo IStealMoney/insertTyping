@@ -14,8 +14,8 @@ import static com.istealmoney.inserttyping.inserttyping.Main.lastScene;
 public class SettingsMenuController {
     public static String[] comboOpt = {"Dark theme", "Light theme"};
     public static String themeSwitcher = "dark-mode.css";
-    public static boolean showTMist = false;
-    public static boolean showProBar = true;
+    private static boolean showTMist = true;
+    private static boolean showProBar = true;
     private static SettingsMenuController instance;
 
     @FXML
@@ -66,8 +66,6 @@ public class SettingsMenuController {
         Main main = Main.getInstance();
         main.updateTheme(themeSwitcher);
         main.switchScene(lastScene);
-        //GameScreenController gameScrCon = GameScreenController.getInstance();
-        //gameScrCon.updateShownStats(showTMist, showProBar);
     }
 
     @FXML

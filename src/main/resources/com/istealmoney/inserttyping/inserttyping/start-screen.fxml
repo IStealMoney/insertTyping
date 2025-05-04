@@ -6,20 +6,20 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istealmoney.inserttyping.inserttyping.StartScreenController">
    <children>
-      <Label fx:id="labelInsert" layoutX="25.0" layoutY="35.0" prefHeight="35.0" prefWidth="354.0" text="Insert your text here:">
+      <Label fx:id="labelInsert" layoutX="25.0" layoutY="25.0" prefHeight="35.0" prefWidth="354.0" text="Insert your text here:">
          <font>
             <Font name="Fira Code Bold" size="26.0" />
          </font></Label>
-      <Button fx:id="handleStartTyping" layoutX="570.0" layoutY="545.0" mnemonicParsing="false" onAction="#handleStartTyping" prefHeight="30.0" prefWidth="200.0" text="I'm ready!">
+      <Button fx:id="handleStartTyping" layoutX="570.0" layoutY="550.0" mnemonicParsing="false" onAction="#handleStartTyping" prefHeight="30.0" prefWidth="200.0" text="I'm ready!">
          <font>
             <Font name="Fira Code Bold" size="13.0" />
          </font></Button>
-      <TextArea fx:id="insertionField" layoutX="25.0" layoutY="100.0" prefHeight="475.0" prefWidth="500.0" />
-      <Button fx:id="clearBtn" layoutX="460.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleClearBtn" prefHeight="30.0" prefWidth="65.0" text="clear">
+      <TextArea fx:id="insertionField" layoutX="25.0" layoutY="105.0" prefHeight="475.0" prefWidth="500.0" />
+      <Button fx:id="clearBtn" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleClearBtn" prefHeight="30.0" prefWidth="65.0" text="clear">
          <font>
             <Font name="Fira Code Bold" size="13.0" />
          </font></Button>
-      <Button fx:id="settingsBtn" layoutX="670.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleSettingsBtn" prefHeight="30.0" prefWidth="100.0" text="settings">
+      <Button fx:id="settingsBtn" layoutX="670.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleSettingsBtn" prefHeight="30.0" prefWidth="100.0" text="settings">
          <font>
             <Font name="Fira Code Bold" size="13.0" />
          </font>
