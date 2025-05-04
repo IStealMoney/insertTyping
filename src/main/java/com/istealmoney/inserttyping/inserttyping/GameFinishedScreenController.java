@@ -5,6 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+
 public class GameFinishedScreenController {
 
     private int tMist = 0;
@@ -25,6 +29,13 @@ public class GameFinishedScreenController {
     @FXML
     private void handleExit() {
         System.exit(0);
+    }
+
+    @FXML
+    private void handleCopyBtn() {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection selection = new StringSelection(statsTxtArea.getText());
+        clipboard.setContents(selection, null);
     }
 
     @FXML
