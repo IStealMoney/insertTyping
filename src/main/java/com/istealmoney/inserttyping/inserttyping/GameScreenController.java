@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
@@ -26,6 +27,9 @@ public class GameScreenController {
     @FXML
     Pane gamePane = new Pane();
 
+    @FXML
+    javafx.scene.control.Button settingsBtn;
+
     public GameScreenController() {
         instance = this;
     }
@@ -38,6 +42,21 @@ public class GameScreenController {
 
     @FXML
     private void initialize() {
+        settingsBtn.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.SPACE && !gameIsRunning) {
+                // handles space here bc KeyEvent ignores every input
+                // if 'settingsBtn.setFocusTraversable(false)'
+                System.out.println("game is running");
+                updateLabel(insertedChar);
+                gameIsRunning = true;
+                event.consume();
+            } else if (event.getCode() == KeyCode.SPACE && gameIsRunning) {
+                updateLabel(insertedChar);
+                keyInpChar = ' ';
+                isRightInput(keyInpChar);
+                event.consume();
+            }
+        });
         insertedChar = makeTxtReady();
         gamePane.setOnKeyPressed(this::handleKeyPressed);
     }
@@ -45,6 +64,9 @@ public class GameScreenController {
     private void handleKeyPressed(javafx.scene.input.KeyEvent keyEvent) {
         keyInpStr = keyEvent.getText();
         keyInpChar = keyInpStr.charAt(0);
+        if (keyEvent.getCode() == KeyCode.SPACE) {  // space is handled in initialize()
+            keyEvent.consume();
+        }
         try {
             if (gameIsRunning) {
                 if (isRightInput(keyInpChar)) {
@@ -54,7 +76,7 @@ public class GameScreenController {
                     Main main = Main.getInstance();
                     main.switchScene("game-finished-screen.fxml");
                 }
-            } else if ((keyEvent.getCode() == KeyCode.S) && !gameIsRunning) {    //start game
+            } else if ((keyEvent.getCode() == javafx.scene.input.KeyCode.SPACE) && !gameIsRunning) {    //start game
                 System.out.println("Game starts now!");
                 updateLabel(insertedChar);
                 gameIsRunning = true;
@@ -75,9 +97,9 @@ public class GameScreenController {
     private boolean isRightInput(char keyInpChar) {
         System.out.println("You typed: " + keyInpChar);
         System.out.println("I want: " + insertedChar[progressI]);
-        if (Character.isUpperCase(insertedChar[progressI])) {
+        //if (insertedChar[progressI] == ' ') {
 
-        }
+       // }
         if (keyInpChar == insertedChar[progressI]) {
             System.out.println("right input");
             progressI++;
