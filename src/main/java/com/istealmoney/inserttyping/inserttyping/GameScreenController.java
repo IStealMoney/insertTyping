@@ -17,12 +17,18 @@ public class GameScreenController {
     private String keyInpStr;
     private char keyInpChar;
     private int progressI = 0;
+    public int typingMistakes = 0;
+    private static GameScreenController instance;
 
     @FXML
     javafx.scene.control.Label firstLabel = new javafx.scene.control.Label();
 
     @FXML
     Pane gamePane = new Pane();
+
+    public GameScreenController() {
+        instance = this;
+    }
 
     @FXML
     public void handleSettingsBtn() throws IOException {
@@ -37,9 +43,8 @@ public class GameScreenController {
     }
 
     private void handleKeyPressed(javafx.scene.input.KeyEvent keyEvent) {
-        keyInpStr = keyEvent.getCode().toString();
+        keyInpStr = keyEvent.getText();
         keyInpChar = keyInpStr.charAt(0);
-        System.out.println(keyInpChar);
         try {
             if (gameIsRunning) {
                 if (isRightInput(keyInpChar)) {
@@ -69,7 +74,10 @@ public class GameScreenController {
 
     private boolean isRightInput(char keyInpChar) {
         System.out.println("You typed: " + keyInpChar);
-        System.out.println("I want:" + insertedChar[progressI]);
+        System.out.println("I want: " + insertedChar[progressI]);
+        if (Character.isUpperCase(insertedChar[progressI])) {
+
+        }
         if (keyInpChar == insertedChar[progressI]) {
             System.out.println("right input");
             progressI++;
@@ -77,11 +85,20 @@ public class GameScreenController {
             return true;
         } else {
             System.out.println("wrong input");
+            typingMistakes++;
         }
         return false;
     }
 
     private void updateLabel(char[] insertedChar) {
         firstLabel.setText(String.valueOf(insertedChar));
+    }
+
+    public static GameScreenController getInstance() {
+        return instance;
+    }
+
+    public int getMistakes() {
+        return typingMistakes;
     }
 }
