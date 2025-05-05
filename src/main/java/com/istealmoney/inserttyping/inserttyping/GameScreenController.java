@@ -83,6 +83,10 @@ public class GameScreenController {
             keyEvent.consume();
         }
         try {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                Main main = Main.getInstance();
+                main.switchScene("pause-screen.fxml");
+            }
             if (gameIsRunning) {
                 if (isRightInput(keyInpChar)) {
                     // move char in label to the left
