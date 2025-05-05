@@ -11,7 +11,7 @@
             <Font name="Fira Code Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="quitBtn" layoutX="325.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleQuitBtn" prefHeight="50.0" prefWidth="150.0" text="QUIT">
+      <Button fx:id="quitBtn" layoutX="325.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleExitBtn" prefHeight="50.0" prefWidth="150.0" text="EXIT">
          <font>
             <Font name="Fira Code Bold" size="20.0" />
          </font>

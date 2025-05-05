@@ -121,7 +121,7 @@ public class GameScreenController {
         } else {
             System.out.println("wrong input");
             typingMistakes++;
-            typos.setText("Typing mistakes: " + typingMistakes);
+            showConfStats();
         }
         return false;
     }
@@ -147,7 +147,7 @@ public class GameScreenController {
             showProBar = true;
         }
         if (showTMist) {    // show typing mistakes
-            typos.setText("Typing Mistakes: " + typingMistakes);
+            typos.setText("Typing mistakes: " + typingMistakes);
         }
         if (showProBar) {   // show progress bar
 

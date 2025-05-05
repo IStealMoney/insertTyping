@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 
 public class PauseScreenController {
-    Main main = new Main();
+    Main main = Main.getInstance();
 
     @FXML
     private void handleContinueBtn() throws IOException { //save data?
@@ -23,7 +23,7 @@ public class PauseScreenController {
     }
 
     @FXML
-    private void handleQuitBtn() {
+    private void handleExitBtn() {
         System.exit(0);
     }
 }
