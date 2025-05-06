@@ -1,6 +1,7 @@
 package com.istealmoney.inserttyping.inserttyping;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -35,7 +36,7 @@ public class GameScreenController {
     private javafx.scene.control.Label startLabel = new javafx.scene.control.Label();
 
     @FXML
-    private javafx.scene.control.Label typos = new javafx.scene.control.Label();
+    private javafx.scene.control.Label tMistLabel = new javafx.scene.control.Label();
 
     @FXML
     private javafx.scene.control.Label userInputLabel = new javafx.scene.control.Label();
@@ -52,7 +53,9 @@ public class GameScreenController {
 
     @FXML
     private void initialize() {
-        typos.setVisible(false);
+        GameData gameData = GameData.getInstance(); // get saved data
+        typingMistakes = gameData.getTMists();
+        tMistLabel.setVisible(false);
         showConfStats();
         settingsBtn.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.SPACE && !gameIsRunning) {   // start game
@@ -60,7 +63,7 @@ public class GameScreenController {
                 // if 'settingsBtn.setFocusTraversable(false)'
                 System.out.println("game is running");
                 startLabel.setVisible(false);
-                typos.setVisible(true);
+                tMistLabel.setVisible(true);
                 updateLabel(insertedChar);
                 gameIsRunning = true;
                 event.consume();
@@ -140,14 +143,14 @@ public class GameScreenController {
     private void showConfStats() {
         SettingsMenuController sMenCon = SettingsMenuController.getInstance();
         if (sMenCon != null) {
-            showTMist = sMenCon.getTMistState();
+            showTMist = sMenCon.getTMistState();    // settings data
             showProBar = sMenCon.getProBarState();
         } else {
             showTMist = true;
             showProBar = true;
         }
         if (showTMist) {    // show typing mistakes
-            typos.setText("Typing mistakes: " + typingMistakes);
+            tMistLabel.setText("Typing mistakes: " + typingMistakes);
         }
         if (showProBar) {   // show progress bar
 
