@@ -1,6 +1,8 @@
 package com.istealmoney.inserttyping.inserttyping;
 
 public class GameData {
+    // contains game data from start screen, game screen and game finished screen
+
     private static GameData instance;
     private int tMists, progressI = 0;
     private String insertedText;
@@ -15,14 +17,6 @@ public class GameData {
             instance = new GameData();
         }
         return instance;
-    }
-
-    public boolean getIsGameRunning() {
-        return gameIsRunning;
-    }
-
-    public void setIsGameRunning() {
-        this.gameIsRunning = gameIsRunning;
     }
 
     public char[] getInsertedChar() {

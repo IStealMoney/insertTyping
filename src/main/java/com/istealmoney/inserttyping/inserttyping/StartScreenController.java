@@ -13,20 +13,24 @@ public class StartScreenController {
 
     @FXML
     private void initialize() {
+        pullFromGameData();
         insertionField.setEditable(true);
-        insertionField.setPromptText("Type your text here...");
+        insertionField.setText(insertedTxt);
     }
 
     @FXML
     public void handleSettingsBtn() throws IOException {
+        insertedTxt = insertionField.getText();
+        pushToGameData();
         Main main = Main.getInstance();
         main.switchScene("settings-menu.fxml");
     }
 
     @FXML
     public void handleStartTyping() throws IOException {
-        insertedTxt = getInsertedText();
+        insertedTxt = insertionField.getText();
         if (checkTxt(insertedTxt)) { // check length ... make txt playable :)
+            pushToGameData();
             Main main = Main.getInstance();
             main.switchScene("game-screen.fxml");
         } else {
@@ -47,8 +51,13 @@ public class StartScreenController {
         }
     }
 
-    public String getInsertedText() {
-        System.out.println(insertionField.getText());
-        return insertionField.getText();
+    private void pushToGameData() {
+        GameData gameData = GameData.getInstance();
+        gameData.setInsertedText(insertedTxt);
+    }
+
+    private void pullFromGameData() {
+        GameData gameData = GameData.getInstance();
+        insertedTxt = gameData.getInsertedText();
     }
 }

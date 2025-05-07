@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static com.istealmoney.inserttyping.inserttyping.Main.lastScene;
 
-public class SettingsMenuController {
+public class SettingsMenuController {   // handles data itself
     public static String[] comboOpt = {"Dark theme", "Light theme"};
     public static String themeSwitcher = "dark-mode.css";
     private static boolean showTMist = true;
@@ -63,6 +63,7 @@ public class SettingsMenuController {
 
     @FXML
     private void handleApplyBtn() throws IOException {
+
         Main main = Main.getInstance();
         main.updateTheme(themeSwitcher);
         main.switchScene(lastScene);

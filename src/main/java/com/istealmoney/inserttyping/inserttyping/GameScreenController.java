@@ -1,24 +1,21 @@
 package com.istealmoney.inserttyping.inserttyping;
 
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-import java.awt.*;
 import java.io.IOException;
 
-import static com.istealmoney.inserttyping.inserttyping.StartScreenController.insertedTxt;
-
 public class GameScreenController {
-    private boolean gameIsRunning = false;
+    private boolean gameIsRunning;
     private static char[] insertedChar;
     private char keyInpChar;
     private int progressI = 0;
     public int typingMistakes = 0;
     private static GameScreenController instance;
     private boolean showTMist, showProBar;
+    private String insertedTxt;
 
     @FXML
     private Pane gamePane = new Pane();
@@ -47,15 +44,16 @@ public class GameScreenController {
 
     @FXML
     public void handleSettingsBtn() throws IOException {
-        Main main = new Main();
+        pushToGameData();
+        Main main = Main.getInstance();
         main.switchScene("settings-menu.fxml");
     }
 
     @FXML
     private void initialize() {
-        GameData gameData = GameData.getInstance(); // get saved data
-        typingMistakes = gameData.getTMists();
         tMistLabel.setVisible(false);
+        pullFromGameData();
+        gameIsRunning = true;
         showConfStats();
         settingsBtn.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.SPACE && !gameIsRunning) {   // start game
@@ -87,6 +85,8 @@ public class GameScreenController {
         }
         try {
             if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                gameIsRunning = false;
+                pushToGameData();
                 Main main = Main.getInstance();
                 main.switchScene("pause-screen.fxml");
             }
@@ -131,6 +131,8 @@ public class GameScreenController {
 
     private void checkGameFinished() throws IOException {
         if (progressI == insertedTxt.length()) { // user finished typing text
+            gameIsRunning = false;
+            pushToGameData();
             Main main = Main.getInstance();
             main.switchScene("game-finished-screen.fxml");
         }
@@ -157,11 +159,23 @@ public class GameScreenController {
         }
     }
 
-    public int getMistakes() {
-        return typingMistakes;
-    }
-
     public static GameScreenController getInstance() {
         return instance;
+    }
+
+    private void pushToGameData() {
+        GameData gameData = GameData.getInstance();
+        gameData.setInsertedText(insertedTxt);
+        gameData.setInsertedChar(insertedChar);
+        gameData.setTMists(typingMistakes);
+        gameData.setProgressI(progressI);
+    }
+
+    private void pullFromGameData() {
+        GameData gameData = GameData.getInstance();
+        this.insertedTxt = gameData.getInsertedText();
+        insertedChar = gameData.getInsertedChar();
+        this.typingMistakes = gameData.getTMists();
+        this.progressI = gameData.getProgressI();
     }
 }
