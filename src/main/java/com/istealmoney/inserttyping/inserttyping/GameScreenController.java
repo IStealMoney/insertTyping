@@ -9,13 +9,14 @@ import java.io.IOException;
 
 public class GameScreenController {
     private boolean gameIsRunning;
-    private static char[] insertedChar;
+    private char[] insertedChar;
     private char keyInpChar;
     private int progressI = 0;
     public int typingMistakes = 0;
     private static GameScreenController instance;
     private boolean showTMist, showProBar;
     private String insertedTxt;
+    private boolean gameJustOpened;
 
     @FXML
     private Pane gamePane = new Pane();
@@ -51,24 +52,38 @@ public class GameScreenController {
 
     @FXML
     private void initialize() {
-        tMistLabel.setVisible(false);
+        GameData gameData = GameData.getInstance();
+        gameJustOpened = gameData.getGameJustOpened();
+        System.out.println(gameJustOpened);
+        gameIsRunning = false;
+        if (gameJustOpened) {
+            gameJustOpened = false;
+            gameData.setGameJustOpened(false);
+            startLabel.setText("Press space to start!");
+        } else {
+            startLabel.setText("Press space to continue!");
+        }
         pullFromGameData();
-        gameIsRunning = true;
         showConfStats();
         settingsBtn.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.SPACE && !gameIsRunning) {   // start game
                 // handles space here bc KeyEvent ignores every input
                 // if 'settingsBtn.setFocusTraversable(false)'
                 System.out.println("game is running");
-                startLabel.setVisible(false);
-                tMistLabel.setVisible(true);
                 updateLabel(insertedChar);
                 gameIsRunning = true;
+                startLabel.setVisible(false);
+                tMistLabel.setVisible(true);
                 event.consume();
             } else if (event.getCode() == KeyCode.SPACE && gameIsRunning) {
+                userInputLabel.setText(String.valueOf(keyInpChar));
+                userInputLabel.setVisible(true);
                 updateLabel(insertedChar);
                 keyInpChar = ' ';
                 isRightInput(keyInpChar);
+                startLabel.setVisible(false);
+                tMistLabel.setVisible(true);
+
                 event.consume();
             }
         });
@@ -167,6 +182,7 @@ public class GameScreenController {
         GameData gameData = GameData.getInstance();
         gameData.setInsertedText(insertedTxt);
         gameData.setInsertedChar(insertedChar);
+        gameData.setKeyInpChar(keyInpChar);
         gameData.setTMists(typingMistakes);
         gameData.setProgressI(progressI);
     }
@@ -174,7 +190,8 @@ public class GameScreenController {
     private void pullFromGameData() {
         GameData gameData = GameData.getInstance();
         this.insertedTxt = gameData.getInsertedText();
-        insertedChar = gameData.getInsertedChar();
+        this.insertedChar = gameData.getInsertedChar();
+        this.keyInpChar = gameData.getKeyInpChar();
         this.typingMistakes = gameData.getTMists();
         this.progressI = gameData.getProgressI();
     }

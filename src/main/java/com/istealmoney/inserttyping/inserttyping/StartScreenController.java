@@ -6,13 +6,17 @@ import javafx.scene.control.TextArea;
 import java.io.IOException;
 
 public class StartScreenController {
-    public static String insertedTxt;
+    public String insertedTxt;
+    public boolean gameJustOpened;
+    private static StartScreenController instance;
 
     @FXML
     private TextArea insertionField = new TextArea();
 
     @FXML
     private void initialize() {
+        instance = this;
+        gameJustOpened = true;
         pullFromGameData();
         insertionField.setEditable(true);
         insertionField.setText(insertedTxt);
@@ -51,6 +55,10 @@ public class StartScreenController {
         }
     }
 
+    public static StartScreenController getInstance() {
+        return instance;
+    }
+
     private void pushToGameData() {
         GameData gameData = GameData.getInstance();
         gameData.setInsertedText(insertedTxt);
@@ -58,6 +66,6 @@ public class StartScreenController {
 
     private void pullFromGameData() {
         GameData gameData = GameData.getInstance();
-        insertedTxt = gameData.getInsertedText();
+        this.insertedTxt = gameData.getInsertedText();
     }
 }

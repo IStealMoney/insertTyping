@@ -4,12 +4,15 @@ public class GameData {
     // contains game data from start screen, game screen and game finished screen
 
     private static GameData instance;
-    private int tMists, progressI = 0;
+    private int tMists, progressI;
     private String insertedText;
     private boolean gameIsRunning;
     private char[] insertedChar;
+    private boolean gameJustOpened = true;
+    private char keyInpChar;
 
     private GameData() {
+
     }
 
     public static GameData getInstance() {
@@ -51,6 +54,21 @@ public class GameData {
         this.insertedText = insertedText;
     }
 
+    public void setGameJustOpened(boolean gameJustOpened) {
+        this.gameJustOpened = gameJustOpened;
+    }
+
+    public boolean getGameJustOpened() {
+        return gameJustOpened;
+    }
+
+    public void setKeyInpChar(char keyInpChar) {
+        this.keyInpChar = keyInpChar;
+    }
+
+    public char getKeyInpChar() {
+        return keyInpChar;
+    }
     // time
     // progress bar
 }
