@@ -8,19 +8,20 @@ import javafx.scene.control.TextArea;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
 
 public class GameFinishedScreenController {
+    private Main main = Main.getInstance();
+    private GameData gameData = GameData.getInstance();
 
     private int tMist;
+    private String insertedTxt;
 
     @FXML
     private TextArea statsTxtArea = new TextArea();
 
     @FXML
     private Label exitLabel = new Label();
-
-    @FXML
-    private Button copyBtn = new Button();
 
     public GameFinishedScreenController() {
 
@@ -35,19 +36,30 @@ public class GameFinishedScreenController {
     }
 
     @FXML
-    private void handleExit() {
-        System.exit(0);
-    }
-
-    @FXML
     private void handleCopyBtn() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection selection = new StringSelection(statsTxtArea.getText());
         clipboard.setContents(selection, null);
     }
 
+    @FXML
+    private void handleExitBtn() {
+        System.exit(0);
+    }
+
+    @FXML
+    private void handleHomeBtn() throws IOException {
+        gameData.resetGameData();
+        main.switchScene("start-screen.fxml");
+    }
+
+    @FXML
+    private void handleRetryBtn() throws IOException {
+        gameData.resetGameData();
+        main.switchScene("game-screen.fxml");
+    }
+
     private void showStats() {
-        GameData gameData = GameData.getInstance();
         tMist = gameData.getTMists();
         statsTxtArea.setText("Your typing mistakes: " + tMist);
     }
@@ -57,7 +69,6 @@ public class GameFinishedScreenController {
     }
 
     private void pullFromGameData() {
-        GameData gameData = GameData.getInstance();
         this.tMist = gameData.getTMists();
     }
 }

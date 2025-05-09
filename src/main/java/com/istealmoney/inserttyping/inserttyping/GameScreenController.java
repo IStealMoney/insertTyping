@@ -68,6 +68,8 @@ public class GameScreenController {
             startLabel.setText("Press space to continue!");
         }
         pullFromGameData();
+        progressPB = 0;
+        progressI = 0;
         showConfStats();
         settingsBtn.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.SPACE && !gameIsRunning) {   // start game

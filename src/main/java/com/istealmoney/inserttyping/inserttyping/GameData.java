@@ -71,4 +71,14 @@ public class GameData {
     }
     // time
     // progress bar
+
+    public void resetGameData() {
+        tMists = 0;
+        progressI = 0;
+        insertedText = "";
+        gameIsRunning = false;
+        insertedChar = null;
+        gameJustOpened = true;
+        keyInpChar = ' ';
+    }
 }
