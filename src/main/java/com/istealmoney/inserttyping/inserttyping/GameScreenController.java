@@ -17,6 +17,7 @@ public class GameScreenController {
     private boolean showTMist, showProBar;
     private String insertedTxt;
     private boolean gameJustOpened;
+    private double progressPB;
 
     @FXML
     private Pane gamePane = new Pane();
@@ -38,6 +39,9 @@ public class GameScreenController {
 
     @FXML
     private javafx.scene.control.Label userInputLabel = new javafx.scene.control.Label();
+
+    @FXML
+    private javafx.scene.control.ProgressBar proBar = new javafx.scene.control.ProgressBar();
 
     public GameScreenController() {
         instance = this;
@@ -134,6 +138,8 @@ public class GameScreenController {
         if (keyInpChar == insertedChar[progressI]) {
             System.out.println("right input");
             progressI++;
+            progressPB = progressI*((double) 1 / insertedTxt.length());
+            proBar.setProgress(progressPB);
             updateLabel(insertedChar);
             return true;
         } else {
