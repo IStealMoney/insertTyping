@@ -32,15 +32,13 @@ public class SettingsMenuController {   // handles data itself
     public void initialize() {
         // ComboBox
         comboTheme.setItems(FXCollections.observableArrayList(comboOpt));
-        comboTheme.valueProperty().addListener(new ChangeListener<String>() {
+        comboTheme.valueProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                switch (newValue) {
-                    case "Light theme":
-                        themeSwitcher = "light-mode.css";
-                        break;
-                    default:
-                        themeSwitcher = "dark-mode.css";
+                if (newValue.equals("Light theme")) {
+                    themeSwitcher = "light-mode.css";
+                } else {
+                    themeSwitcher = "dark-mode.css";
                 }
             }
         });

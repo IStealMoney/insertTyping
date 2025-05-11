@@ -35,21 +35,30 @@ public class Main extends Application {
         lastScene = currentScene;
         try {
             scene = new Scene(guiRoot, 800, 600);
-            if (fxml.equals("start-screen.fxml")) {
-                currentScene = "start-screen.fxml";
-                stage.setTitle("InsertTyping | start");
-            } else if (fxml.equals("game-screen.fxml")) {
-                currentScene = "game-screen.fxml";
-                stage.setTitle("InsertTyping | game");
-            } else if (fxml.equals("pause-screen")) {
-                currentScene = "pause-screen.fxml";
-                stage.setTitle("InsertTyping | pause");
-            } else if (fxml.equals("settings-menu.fxml")) {
-                currentScene = "settings-menu.fxml";
-                stage.setTitle("InsertTyping | settings");
-            } else if (fxml.equals("game-finished-screen.fxml")) {
-                currentScene = "game-finished-screen.fxml";
-                stage.setTitle("InsertTyping | finished");
+            switch (fxml) {
+                case "start-screen.fxml":
+                    currentScene = "start-screen.fxml";
+                    stage.setTitle("InsertTyping | start");
+                    break;
+                case "game-screen.fxml":
+                    currentScene = "game-screen.fxml";
+                    stage.setTitle("InsertTyping | game");
+                    break;
+                case "pause-screen":
+                    currentScene = "pause-screen.fxml";
+                    stage.setTitle("InsertTyping | pause");
+                    break;
+                case "settings-menu.fxml":
+                    currentScene = "settings-menu.fxml";
+                    stage.setTitle("InsertTyping | settings");
+                    break;
+                case "game-finished-screen.fxml":
+                    currentScene = "game-finished-screen.fxml";
+                    stage.setTitle("InsertTyping | finished");
+                    break;
+                default:
+                   currentScene = "start-screen.fxml";
+                   break;
             }
         } catch (Exception e) {
             e.printStackTrace();
