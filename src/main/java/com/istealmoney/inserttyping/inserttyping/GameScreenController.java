@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 
 public class GameScreenController {
-    private GameData gameData = GameData.getInstance();
+    private final GameData gameData = GameData.getInstance();
     private boolean gameIsRunning;
     private char[] insertedChar;
     private char keyInpChar;
@@ -19,6 +19,7 @@ public class GameScreenController {
     private String insertedTxt;
     private boolean gameJustOpened;
     private double progressPB;
+    private boolean tMistLocked;
 
     @FXML
     private Pane gamePane = new Pane();
@@ -30,7 +31,7 @@ public class GameScreenController {
     private javafx.scene.control.Label firstLabel = new javafx.scene.control.Label();
 
     @FXML
-    private javafx.scene.control.Label secondLabel = new javafx.scene.control.Label();
+    private final javafx.scene.control.Label secondLabel = new javafx.scene.control.Label();
 
     @FXML
     private javafx.scene.control.Label startLabel = new javafx.scene.control.Label();
@@ -57,6 +58,8 @@ public class GameScreenController {
 
     @FXML
     private void initialize() {
+        //firstLabel.setVisible(true);
+        //userInputLabel.setVisible(false);
         gameJustOpened = gameData.getGameJustOpened();
         proBar.setVisible(false);
         gameIsRunning = false;
@@ -83,7 +86,7 @@ public class GameScreenController {
             } else if (event.getCode() == KeyCode.SPACE && !gameIsRunning) { // start game
                 // handles space here bc KeyEvent ignores every input
                 // if 'settingsBtn.setFocusTraversable(false)'
-                System.out.println("game is running");
+                userInputLabel.setVisible(true);
                 updateLabel(insertedChar);
                 gameIsRunning = true;
                 startLabel.setVisible(false);
@@ -97,27 +100,31 @@ public class GameScreenController {
     }
 
     private void handleKeyPressed(javafx.scene.input.KeyEvent keyEvent) {
-        String keyInpStr = keyEvent.getText();
-        keyInpChar = keyInpStr.charAt(0);
-        updateUserInputLabel(keyInpChar);
-        if (keyEvent.getCode() == KeyCode.SPACE) {  // space is handled in initialize()
-            keyEvent.consume();
-        }
-        try {
-            if (keyEvent.getCode() == KeyCode.ESCAPE) {
-                gameIsRunning = false;
-                pushToGameData();
-                Main main = Main.getInstance();
-                main.switchScene("pause-screen.fxml");
+        if (gameIsRunning) {
+            String keyInpStr = keyEvent.getText();
+            keyInpChar = keyInpStr.charAt(0);
+            updateUserInputLabel(keyInpChar);
+            if (keyEvent.getCode() == KeyCode.SPACE) {  // space is handled in initialize()
+                keyEvent.consume();
             }
-            if (gameIsRunning) {
-                if (isRightInput(keyInpChar)) {
-                    // move char in label to the left
+            try {
+                if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                    gameIsRunning = false;
+                    pushToGameData();
+                    Main main = Main.getInstance();
+                    main.switchScene("pause-screen.fxml");
                 }
-                checkGameFinished();
+                if (gameIsRunning) {
+                    if (isRightInput(keyInpChar)) {
+
+                    } else {
+
+                    }
+                    checkGameFinished();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -134,18 +141,18 @@ public class GameScreenController {
     }
 
     private boolean isRightInput(char keyInpChar) {
-        System.out.println("You typed: " + keyInpChar);
-        System.out.println("I want: " + insertedChar[progressI]);
         if (keyInpChar == insertedChar[progressI]) {
-            System.out.println("right input");
             progressI++;
-            progressPB = progressI*((double) 1 / insertedTxt.length());
+            progressPB = progressI * ((double) 1 / insertedTxt.length());
             proBar.setProgress(progressPB);
             updateLabel(insertedChar);
+            tMistLocked = false;
             return true;
         } else {
-            System.out.println("wrong input");
-            typingMistakes++;
+            if (!tMistLocked) {
+                typingMistakes++;
+            }
+            tMistLocked = true;
             showConfStats();
         }
         return false;

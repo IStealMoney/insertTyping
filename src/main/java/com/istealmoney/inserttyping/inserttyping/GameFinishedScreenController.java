@@ -11,8 +11,8 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 
 public class GameFinishedScreenController {
-    private Main main = Main.getInstance();
-    private GameData gameData = GameData.getInstance();
+    private final Main main = Main.getInstance();
+    private final GameData gameData = GameData.getInstance();
 
     private int tMist;
     private String insertedTxt;
@@ -21,7 +21,7 @@ public class GameFinishedScreenController {
     private TextArea statsTxtArea = new TextArea();
 
     @FXML
-    private Label exitLabel = new Label();
+    private final Label exitLabel = new Label();
 
     public GameFinishedScreenController() {
 
@@ -68,7 +68,7 @@ public class GameFinishedScreenController {
     }
 
     private void showStats() {
-        statsTxtArea.setText("Your typing mistakes: " + tMist);
+        statsTxtArea.setText("Typing mistakes: " + tMist);
     }
 
     private void pushToGameData() {

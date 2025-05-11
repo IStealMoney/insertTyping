@@ -48,11 +48,8 @@ public class StartScreenController {
     }
 
     public boolean checkTxt(String insertedTxt) {
-        if (!insertedTxt.isEmpty() && insertedTxt.length() < 2500) { // some checks
-            return true;
-        } else {
-            return false;
-        }
+        // some checks
+        return !insertedTxt.isEmpty() && insertedTxt.length() < 2500;
     }
 
     public static StartScreenController getInstance() {
