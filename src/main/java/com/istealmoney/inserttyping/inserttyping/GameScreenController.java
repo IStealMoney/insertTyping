@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 
 public class GameScreenController {
+    private GameData gameData = GameData.getInstance();
     private boolean gameIsRunning;
     private char[] insertedChar;
     private char keyInpChar;
@@ -56,9 +57,8 @@ public class GameScreenController {
 
     @FXML
     private void initialize() {
-        GameData gameData = GameData.getInstance();
         gameJustOpened = gameData.getGameJustOpened();
-        System.out.println(gameJustOpened);
+        proBar.setVisible(false);
         gameIsRunning = false;
         if (gameJustOpened) {
             gameJustOpened = false;
@@ -68,11 +68,19 @@ public class GameScreenController {
             startLabel.setText("Press space to continue!");
         }
         pullFromGameData();
-        progressPB = 0;
-        progressI = 0;
-        showConfStats();
         settingsBtn.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.SPACE && !gameIsRunning) {   // start game
+            if (event.getCode() == KeyCode.SPACE && gameIsRunning) {
+                userInputLabel.setText(String.valueOf(keyInpChar));
+                userInputLabel.setVisible(true);
+                updateLabel(insertedChar);
+                keyInpChar = ' ';
+                isRightInput(keyInpChar);
+                startLabel.setVisible(false);
+                proBar.setVisible(true);
+                tMistLabel.setVisible(true);
+                showConfStats();
+                event.consume();
+            } else if (event.getCode() == KeyCode.SPACE && !gameIsRunning) { // start game
                 // handles space here bc KeyEvent ignores every input
                 // if 'settingsBtn.setFocusTraversable(false)'
                 System.out.println("game is running");
@@ -80,16 +88,7 @@ public class GameScreenController {
                 gameIsRunning = true;
                 startLabel.setVisible(false);
                 tMistLabel.setVisible(true);
-                event.consume();
-            } else if (event.getCode() == KeyCode.SPACE && gameIsRunning) {
-                userInputLabel.setText(String.valueOf(keyInpChar));
-                userInputLabel.setVisible(true);
-                updateLabel(insertedChar);
-                keyInpChar = ' ';
-                isRightInput(keyInpChar);
-                startLabel.setVisible(false);
-                tMistLabel.setVisible(true);
-
+                showConfStats();
                 event.consume();
             }
         });
@@ -165,10 +164,10 @@ public class GameScreenController {
         firstLabel.setText(String.valueOf(insertedChar));
     }
 
-    private void showConfStats() {
+    private void showConfStats() {  // things that can be modified in SettingsMenuController.java
         SettingsMenuController sMenCon = SettingsMenuController.getInstance();
         if (sMenCon != null) {
-            showTMist = sMenCon.getTMistState();    // settings data
+            showTMist = sMenCon.getTMistState(); // settings data
             showProBar = sMenCon.getProBarState();
         } else {
             showTMist = true;
@@ -176,9 +175,14 @@ public class GameScreenController {
         }
         if (showTMist) {    // show typing mistakes
             tMistLabel.setText("Typing mistakes: " + typingMistakes);
+        } else {
+            tMistLabel.setVisible(false);
         }
         if (showProBar) {   // show progress bar
-
+            proBar.setProgress(progressPB);
+            proBar.setVisible(true);
+        } else {
+            proBar.setVisible(false);
         }
     }
 
@@ -193,6 +197,7 @@ public class GameScreenController {
         gameData.setKeyInpChar(keyInpChar);
         gameData.setTMists(typingMistakes);
         gameData.setProgressI(progressI);
+        gameData.setProgressPB(progressPB);
     }
 
     private void pullFromGameData() {
@@ -202,5 +207,6 @@ public class GameScreenController {
         this.keyInpChar = gameData.getKeyInpChar();
         this.typingMistakes = gameData.getTMists();
         this.progressI = gameData.getProgressI();
+        this.progressPB = gameData.getProgressPB();
     }
 }

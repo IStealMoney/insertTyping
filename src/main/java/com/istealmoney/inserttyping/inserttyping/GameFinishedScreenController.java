@@ -49,18 +49,25 @@ public class GameFinishedScreenController {
 
     @FXML
     private void handleHomeBtn() throws IOException {
-        gameData.resetGameData();
+        gameData.setProgressI(0);
+        gameData.setProgressPB(0);
+        gameData.setTMists(0);
+        gameData.setGameJustOpened(true);
+        gameData.setInsertedText("");
+        gameData.setKeyInpChar(' ');
         main.switchScene("start-screen.fxml");
     }
 
     @FXML
     private void handleRetryBtn() throws IOException {
-        gameData.resetGameData();
+        gameData.setProgressI(0);
+        gameData.setProgressPB(0);
+        gameData.setTMists(0);
+
         main.switchScene("game-screen.fxml");
     }
 
     private void showStats() {
-        tMist = gameData.getTMists();
         statsTxtArea.setText("Your typing mistakes: " + tMist);
     }
 

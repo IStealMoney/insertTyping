@@ -10,6 +10,7 @@ public class GameData {
     private char[] insertedChar;
     private boolean gameJustOpened = true;
     private char keyInpChar;
+    private double progressPB;
 
     private GameData() {
 
@@ -69,16 +70,12 @@ public class GameData {
     public char getKeyInpChar() {
         return keyInpChar;
     }
-    // time
-    // progress bar
 
-    public void resetGameData() {
-        tMists = 0;
-        progressI = 0;
-        insertedText = "";
-        gameIsRunning = false;
-        insertedChar = null;
-        gameJustOpened = true;
-        keyInpChar = ' ';
+    public void setProgressPB(double progressPB) {
+        this.progressPB = progressPB;
+    }
+
+    public double getProgressPB() {
+        return progressPB;
     }
 }
