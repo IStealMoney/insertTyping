@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class GameScreenController {
@@ -116,9 +117,10 @@ public class GameScreenController {
                 }
                 if (gameIsRunning) {
                     if (isRightInput(keyInpChar)) {
-
+                        firstLabel.setStyle("-fx-text-fill: #ffffff");
+                        updateLabel(insertedChar);
                     } else {
-
+                        firstLabel.setStyle("-fx-text-fill: #ff0000");
                     }
                     checkGameFinished();
                 }
