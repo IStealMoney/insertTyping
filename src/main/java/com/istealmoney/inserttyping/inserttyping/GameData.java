@@ -11,6 +11,7 @@ public class GameData {
     private boolean gameJustOpened = true;
     private char keyInpChar;
     private double progressPB;
+    private int displayedCharCounter;
 
     private GameData() {
 
@@ -77,5 +78,13 @@ public class GameData {
 
     public double getProgressPB() {
         return progressPB;
+    }
+
+    public void setDisplayedCharCounter(int displayedCharCounter) {
+        this.displayedCharCounter = displayedCharCounter;
+    }
+
+    public int getDisplayedCharCounter() {
+        return displayedCharCounter;
     }
 }
