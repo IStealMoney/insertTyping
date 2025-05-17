@@ -11,7 +11,7 @@ public class GameScreenController {
     private final GameData gameData = GameData.getInstance();
     private boolean gameIsRunning;
     private char keyInpChar;
-    private int progressI = 0;
+    private int progressI;  // up to 40 (progress in displayedChar)
     public int typingMistakes = 0;
     private static GameScreenController instance;
     private boolean showTMist, showProBar;
@@ -19,9 +19,9 @@ public class GameScreenController {
     private boolean gameJustOpened;
     private double progressPB;
     private boolean tMistLocked;
-    private int displayedCharCounter = 0;
+    private int displayedCharCounter;   // up to startInsertedChar.length()
     private char[] startInsertedChar;
-    private boolean uLabelNeedsToUpdate;
+    private boolean textNeedsToUpdate;
 
     @FXML
     private Pane gamePane = new Pane();
@@ -92,6 +92,8 @@ public class GameScreenController {
                 startLabel.setVisible(false);
                 tMistLabel.setVisible(true);
                 gameIsRunning = true;
+                gameData.setDisplayedCharCounter(0);
+                gameData.setProgressI(0);
                 showConfStats();
                 event.consume();
             }
@@ -101,9 +103,12 @@ public class GameScreenController {
         gamePane.setOnKeyPressed(this::handleKeyPressed);
     }
 
-    private void handleKeyPressed(javafx.scene.input.KeyEvent keyEvent) {
+    private void handleKeyPressed(KeyEvent keyEvent) {
         if (gameIsRunning) {
             String keyInpStr = keyEvent.getText();
+            if (keyInpStr.isEmpty()) {
+                return;
+            }
             keyInpChar = keyInpStr.charAt(0);
             updateUserInputLabel(keyInpChar);
             if (keyEvent.getCode() == KeyCode.SPACE) {  // space is handled in initialize()
@@ -118,15 +123,13 @@ public class GameScreenController {
                 }
                 if (isRightInput(keyInpChar)) {
                     firstLabel.setStyle("-fx-text-fill: #ffffff");
-                    if (uLabelNeedsToUpdate) {
+                    if (gameData.getTextNeedsToUpdate()) {
                         updateTextLabel(startInsertedChar);
-
                     }
+                    checkGameFinished();
                 } else {
                     firstLabel.setStyle("-fx-text-fill: #ff0000");
                 }
-                checkGameFinished();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -146,11 +149,23 @@ public class GameScreenController {
     }
 
     private boolean isRightInput(char keyInpChar) {
-        if (keyInpChar == startInsertedChar[progressI]) {
+        displayedCharCounter = gameData.getDisplayedCharCounter();
+        if (keyInpChar == startInsertedChar[displayedCharCounter]) {
+            displayedCharCounter++;
+            gameData.setDisplayedCharCounter(displayedCharCounter);
             progressI++;
-            progressPB = progressI * ((double) 1 / startInsertedTxt.length());
+            gameData.setProgressI(progressI);
+            progressPB = displayedCharCounter * ((double) 1 / startInsertedTxt.length());
             proBar.setProgress(progressPB);
             tMistLocked = false;
+            if (progressI == 40 /*|| displayedCharCounter == startInsertedTxt.length()*/) { // end of array
+                gameData.setTextNeedsToUpdate(true);
+                updateTextLabel(startInsertedChar);
+                progressI = 0;
+                gameData.setProgressI(0);
+            } else {
+                textNeedsToUpdate = false;
+            }
             return true;
         } else {
             if (!tMistLocked) {
@@ -163,7 +178,7 @@ public class GameScreenController {
     }
 
     private void checkGameFinished() throws IOException {
-        if (progressI == startInsertedTxt.length()) { // user finished typing text
+        if (displayedCharCounter == startInsertedTxt.length()) { // user finished typing text
             gameIsRunning = false;
             pushToGameData();
             Main main = Main.getInstance();
@@ -174,13 +189,13 @@ public class GameScreenController {
     private void updateTextLabel(char[] startInsertedChar) {
         char[] displayedChar = new char[40];
         this.displayedCharCounter = gameData.getDisplayedCharCounter();
-        for (int i = 0; i < startInsertedTxt.length(); i++) {     // fill array for displaying purposes
+        for (int i = 0; i < startInsertedTxt.length() && i < 40; i++) {     // fill array for displaying purposes
             displayedChar[i] = startInsertedChar[displayedCharCounter];
-            this.displayedCharCounter++;
+            displayedCharCounter++;
+            gameData.setDisplayedCharCounter(displayedCharCounter);
             if (displayedCharCounter >= startInsertedTxt.length()) {
                 gameIsRunning = false;
-                this.displayedCharCounter = 0;
-                gameData.setDisplayedCharCounter(displayedCharCounter);
+                displayedCharCounter = 0;
             }
         }
         firstLabel.setText(String.valueOf(displayedChar));

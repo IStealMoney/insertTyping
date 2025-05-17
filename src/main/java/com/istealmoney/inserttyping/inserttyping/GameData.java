@@ -12,6 +12,7 @@ public class GameData {
     private char keyInpChar;
     private double progressPB;
     private int displayedCharCounter;
+    private boolean textNeedsToUpdate;
 
     private GameData() {
 
@@ -86,5 +87,13 @@ public class GameData {
 
     public int getDisplayedCharCounter() {
         return displayedCharCounter;
+    }
+
+    public void setTextNeedsToUpdate(boolean textNeedsToUpdate) {
+        this.gameIsRunning = textNeedsToUpdate;
+    }
+
+    public boolean getTextNeedsToUpdate() {
+        return textNeedsToUpdate;
     }
 }

@@ -1,7 +1,6 @@
 package com.istealmoney.inserttyping.inserttyping;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
@@ -51,6 +50,7 @@ public class GameFinishedScreenController {
     private void handleHomeBtn() throws IOException {
         gameData.setProgressI(0);
         gameData.setProgressPB(0);
+        gameData.setDisplayedCharCounter(0);
         gameData.setTMists(0);
         gameData.setGameJustOpened(true);
         gameData.setInsertedText("");
@@ -61,6 +61,7 @@ public class GameFinishedScreenController {
     @FXML
     private void handleRetryBtn() throws IOException {
         gameData.setProgressI(0);
+        gameData.setDisplayedCharCounter(0);
         gameData.setProgressPB(0);
         gameData.setTMists(0);
 
