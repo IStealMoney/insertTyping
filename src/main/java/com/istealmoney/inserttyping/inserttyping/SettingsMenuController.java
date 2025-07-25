@@ -61,7 +61,6 @@ public class SettingsMenuController {   // handles data itself
 
     @FXML
     private void handleApplyBtn() throws IOException {
-
         Main main = Main.getInstance();
         main.updateTheme(themeSwitcher);
         main.switchScene(lastScene);

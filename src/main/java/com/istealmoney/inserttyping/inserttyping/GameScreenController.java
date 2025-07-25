@@ -164,6 +164,7 @@ public class GameScreenController {
                 progressI = 0;
                 gameData.setProgressI(0);
             } else {
+                gameData.setTextNeedsToUpdate(false);
                 textNeedsToUpdate = false;
             }
             return true;
@@ -235,6 +236,7 @@ public class GameScreenController {
         gameData.setTMists(typingMistakes);
         gameData.setProgressI(progressI);
         gameData.setProgressPB(progressPB);
+        gameData.setDisplayedCharCounter(displayedCharCounter);
     }
 
     private void pullFromGameData() {
@@ -245,5 +247,6 @@ public class GameScreenController {
         this.typingMistakes = gameData.getTMists();
         this.progressI = gameData.getProgressI();
         this.progressPB = gameData.getProgressPB();
+        this.displayedCharCounter = gameData.getDisplayedCharCounter();
     }
 }
