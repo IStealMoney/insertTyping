@@ -13,6 +13,7 @@ public class GameData {
     private double progressPB;
     private int displayedCharCounter;
     private boolean textNeedsToUpdate;
+    private String themeSwitcher;
 
     private GameData() {
 
@@ -95,5 +96,13 @@ public class GameData {
 
     public boolean getTextNeedsToUpdate() {
         return textNeedsToUpdate;
+    }
+
+    public void setCurrentTheme(String themeSwitcher) {
+        this.themeSwitcher = themeSwitcher;
+    }
+
+    public String getCurrentTheme() {
+        return themeSwitcher;
     }
 }

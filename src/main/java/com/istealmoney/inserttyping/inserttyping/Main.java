@@ -7,9 +7,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static com.istealmoney.inserttyping.inserttyping.SettingsMenuController.themeSwitcher;
-
 public class Main extends Application {
+    private final GameData gameData = GameData.getInstance();
     private static Scene scene;
     private static Stage stage;
     public static String lastScene, currentScene;
@@ -19,6 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         instance = this;
         stage = primaryStage;
+        gameData.setCurrentTheme("dark-mode.css");
         currentScene = "start-screen.fxml";
         switchScene(currentScene);
     }
@@ -30,7 +30,7 @@ public class Main extends Application {
     public void switchScene(String fxml) throws IOException {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(fxml));
         Parent guiRoot = loader.load();
-        guiRoot.getStylesheets().add(getClass().getResource(themeSwitcher).toExternalForm());
+        guiRoot.getStylesheets().add(getClass().getResource(gameData.getCurrentTheme()).toExternalForm());
         lastScene = currentScene;
         try {
             scene = new Scene(guiRoot, 800, 600);

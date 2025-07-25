@@ -122,7 +122,15 @@ public class GameScreenController {
                     main.switchScene("pause-screen.fxml");
                 }
                 if (isRightInput(keyInpChar)) {
-                    firstLabel.setStyle("-fx-text-fill: #ffffff");
+                    switch (gameData.getCurrentTheme()) {
+                        case "dark-mode.css":
+                            firstLabel.setStyle("-fx-text-fill: #ffffff");
+                            break;
+                        case "light-mode.css":
+                            firstLabel.setStyle("-fx-text-fill: #000000");
+                            break;
+                        default:
+                    }
                     if (gameData.getTextNeedsToUpdate()) {
                         updateTextLabel(startInsertedChar);
                     }

@@ -17,6 +17,7 @@ public class SettingsMenuController {   // handles data itself
     private static boolean showTMist = true;
     private static boolean showProBar = true;
     private static SettingsMenuController instance;
+    private final GameData gameData = GameData.getInstance();
 
     @FXML
     private ComboBox<String> comboTheme;
@@ -63,6 +64,7 @@ public class SettingsMenuController {   // handles data itself
     private void handleApplyBtn() throws IOException {
         Main main = Main.getInstance();
         main.updateTheme(themeSwitcher);
+        gameData.setCurrentTheme(themeSwitcher);
         main.switchScene(lastScene);
     }
 
