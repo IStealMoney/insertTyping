@@ -9,6 +9,7 @@ public class StartScreenController {
     public String insertedTxt;
     public boolean gameJustOpened;
     private static StartScreenController instance;
+    private final GameData gameData = GameData.getInstance();
 
     @FXML
     private TextArea insertionField = new TextArea();
@@ -16,25 +17,22 @@ public class StartScreenController {
     @FXML
     private void initialize() {
         instance = this;
-        gameJustOpened = true;
-        pullFromGameData();
+        gameData.setGameJustOpened(true);
         insertionField.setEditable(true);
-        insertionField.setText(insertedTxt);
+        insertionField.setText(gameData.getInsertedText());
     }
 
     @FXML
     public void handleSettingsBtn() throws IOException {
-        insertedTxt = insertionField.getText();
-        pushToGameData();
+        gameData.setInsertedText(insertionField.getText());
         Main main = Main.getInstance();
         main.switchScene("settings-menu.fxml");
     }
 
     @FXML
     public void handleStartTyping() throws IOException {
-        insertedTxt = insertionField.getText();
-        if (checkTxt(insertedTxt)) { // check length ... make txt playable :)
-            pushToGameData();
+        gameData.setInsertedText(insertionField.getText());
+        if (checkTxt(gameData.getInsertedText())) { // check length ... make txt playable :)
             Main main = Main.getInstance();
             main.switchScene("game-screen.fxml");
         } else {
@@ -45,6 +43,7 @@ public class StartScreenController {
     @FXML
     public void handleClearBtn() {
         insertionField.clear();
+        gameData.setInsertedText("");
     }
 
     public boolean checkTxt(String insertedTxt) {
@@ -54,15 +53,5 @@ public class StartScreenController {
 
     public static StartScreenController getInstance() {
         return instance;
-    }
-
-    private void pushToGameData() {
-        GameData gameData = GameData.getInstance();
-        gameData.setInsertedText(insertedTxt);
-    }
-
-    private void pullFromGameData() {
-        GameData gameData = GameData.getInstance();
-        this.insertedTxt = gameData.getInsertedText();
     }
 }

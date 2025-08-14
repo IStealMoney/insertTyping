@@ -13,9 +13,6 @@ public class GameFinishedScreenController {
     private final Main main = Main.getInstance();
     private final GameData gameData = GameData.getInstance();
 
-    private int tMist;
-    private String insertedTxt;
-
     @FXML
     private TextArea statsTxtArea = new TextArea();
 
@@ -28,7 +25,6 @@ public class GameFinishedScreenController {
 
     @FXML
     public void initialize() {
-        pullFromGameData();
         statsTxtArea.setEditable(false);
         exitLabel.setVisible(false);
         showStats();
@@ -48,10 +44,10 @@ public class GameFinishedScreenController {
 
     @FXML
     private void handleHomeBtn() throws IOException {
-        gameData.setProgressI(0);
+        gameData.resetProgressI();
         gameData.setProgressPB(0);
-        gameData.setDisplayedCharCounter(0);
-        gameData.setTMists(0);
+        gameData.resetDisplayedCharCounter();
+        gameData.resetTMists();
         gameData.setGameJustOpened(true);
         gameData.setInsertedText("");
         gameData.setKeyInpChar(' ');
@@ -60,23 +56,15 @@ public class GameFinishedScreenController {
 
     @FXML
     private void handleRetryBtn() throws IOException {
-        gameData.setProgressI(0);
-        gameData.setDisplayedCharCounter(0);
+        gameData.resetProgressI();
+        gameData.resetDisplayedCharCounter();
+        gameData.resetProgressI();
         gameData.setProgressPB(0);
-        gameData.setTMists(0);
-
+        gameData.resetTMists();
         main.switchScene("game-screen.fxml");
     }
 
     private void showStats() {
-        statsTxtArea.setText("Typing mistakes: " + tMist);
-    }
-
-    private void pushToGameData() {
-
-    }
-
-    private void pullFromGameData() {
-        this.tMist = gameData.getTMists();
+        statsTxtArea.setText("Typing mistakes: " + gameData.getTMists());
     }
 }

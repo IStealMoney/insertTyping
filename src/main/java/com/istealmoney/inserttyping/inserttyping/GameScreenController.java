@@ -9,19 +9,11 @@ import java.io.IOException;
 
 public class GameScreenController {
     private final GameData gameData = GameData.getInstance();
-    private boolean gameIsRunning;
     private char keyInpChar;
-    private int progressI;  // up to 40 (progress in displayedChar)
-    public int typingMistakes = 0;
     private static GameScreenController instance;
     private boolean showTMist, showProBar;
-    private String startInsertedTxt;
-    private boolean gameJustOpened;
-    private double progressPB;
-    private boolean tMistLocked;
-    private int displayedCharCounter;   // up to startInsertedChar.length()
+    char[] displayedChar = new char[40];
     private char[] startInsertedChar;
-    private boolean textNeedsToUpdate;
 
     @FXML
     private Pane gamePane = new Pane();
@@ -53,7 +45,6 @@ public class GameScreenController {
 
     @FXML
     public void handleSettingsBtn() throws IOException {
-        pushToGameData();
         Main main = Main.getInstance();
         main.switchScene("settings-menu.fxml");
     }
@@ -62,62 +53,64 @@ public class GameScreenController {
     private void initialize() {
         firstLabel.setVisible(false);
         userInputLabel.setVisible(false);
-        gameJustOpened = gameData.getGameJustOpened();
         proBar.setVisible(false);
-        gameIsRunning = false;
-        if (gameJustOpened) {
-            gameJustOpened = false;
+        gameData.setGameIsRunning(false);
+        if (gameData.getGameJustOpened()) {
+            gameData.setGameJustOpened(false);
+            gameData.setTextNeedsToUpdate(true);
             gameData.setGameJustOpened(false);
             startLabel.setText("Press space to start!");
         } else {
             startLabel.setText("Press space to continue!");
         }
-        pullFromGameData();
         settingsBtn.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.SPACE && gameIsRunning) {
+            if (event.getCode() == KeyCode.SPACE && gameData.getGameIsRunning()) {
                 userInputLabel.setText(String.valueOf(keyInpChar));
-                //userInputLabel.setVisible(true);
+                userInputLabel.setVisible(true);
                 keyInpChar = ' ';
                 isRightInput(keyInpChar);
                 startLabel.setVisible(false);
                 proBar.setVisible(true);
                 tMistLabel.setVisible(true);
+                firstLabel.setVisible(true);
                 showConfStats();
                 event.consume();
-            } else if (event.getCode() == KeyCode.SPACE && !gameIsRunning) { // start game
+            } else if (event.getCode() == KeyCode.SPACE && !gameData.getGameIsRunning()) { // start game
                 // handles space here bc KeyEvent ignores every input
                 // if 'settingsBtn.setFocusTraversable(false)'
+                startLabel.setVisible(false);
                 firstLabel.setVisible(true);
                 userInputLabel.setVisible(true);
-                startLabel.setVisible(false);
                 tMistLabel.setVisible(true);
-                gameIsRunning = true;
-                gameData.setDisplayedCharCounter(0);
-                gameData.setProgressI(0);
+                gameData.setGameIsRunning(true);
+                gameData.resetDisplayedCharCounter();
+                gameData.resetProgressI();
                 showConfStats();
                 event.consume();
             }
         });
         startInsertedChar = makeTxtReady();
-        updateTextLabel(startInsertedChar);
+        if (gameData.getTextNeedsToUpdate()) {
+            gameData.setTextNeedsToUpdate(false);
+            updateTextLabel(startInsertedChar);
+        }
         gamePane.setOnKeyPressed(this::handleKeyPressed);
     }
 
     private void handleKeyPressed(KeyEvent keyEvent) {
-        if (gameIsRunning) {
+        if (gameData.getGameIsRunning()) {
             String keyInpStr = keyEvent.getText();
             if (keyInpStr.isEmpty()) {
                 return;
             }
             keyInpChar = keyInpStr.charAt(0);
-            updateUserInputLabel(keyInpChar);
+            userInputLabel.setText(String.valueOf(keyInpChar));
             if (keyEvent.getCode() == KeyCode.SPACE) {  // space is handled in initialize()
                 keyEvent.consume();
             }
             try {
                 if (keyEvent.getCode() == KeyCode.ESCAPE) {
-                    gameIsRunning = false;
-                    pushToGameData();
+                    gameData.setGameIsRunning(false);
                     Main main = Main.getInstance();
                     main.switchScene("pause-screen.fxml");
                 }
@@ -132,6 +125,7 @@ public class GameScreenController {
                         default:
                     }
                     if (gameData.getTextNeedsToUpdate()) {
+                        gameData.setTextNeedsToUpdate(false);
                         updateTextLabel(startInsertedChar);
                     }
                     checkGameFinished();
@@ -144,67 +138,66 @@ public class GameScreenController {
         }
     }
 
-    private void updateUserInputLabel(char key) {
-        userInputLabel.setText(String.valueOf(key));
-    }
-
     private char[] makeTxtReady() {
-        startInsertedChar = new char[startInsertedTxt.length()];
-        for (int i = 0; i < startInsertedTxt.length(); i++) {    // transform String to a char array
-            startInsertedChar[i] = startInsertedTxt.charAt(i);
+        startInsertedChar = new char[gameData.getInsertedText().length()];
+        for (int i = 0; i < gameData.getInsertedText().length(); i++) {    // transform String to a char array
+            startInsertedChar[i] = gameData.getInsertedText().charAt(i);
         }
+        gameData.setStartInsertedChar(startInsertedChar);
         return startInsertedChar;
     }
 
     private boolean isRightInput(char keyInpChar) {
-        displayedCharCounter = gameData.getDisplayedCharCounter();
-        if (keyInpChar == startInsertedChar[displayedCharCounter]) {
-            displayedCharCounter++;
-            gameData.setDisplayedCharCounter(displayedCharCounter);
-            progressI++;
-            gameData.setProgressI(progressI);
-            progressPB = displayedCharCounter * ((double) 1 / startInsertedTxt.length());
-            proBar.setProgress(progressPB);
-            tMistLocked = false;
-            if (progressI == 40 /*|| displayedCharCounter == startInsertedTxt.length()*/) { // end of array
-                gameData.setTextNeedsToUpdate(true);
-                updateTextLabel(startInsertedChar);
-                progressI = 0;
-                gameData.setProgressI(0);
+        System.out.println("DispCharCount1:" + gameData.getDisplayedCharCounter());
+        System.out.println("ProgressI: " + gameData.getProgressI());
+        if (keyInpChar == startInsertedChar[gameData.getProgressI()]) {
+            gameData.setProgressI(1); //+=1
+            gameData.setDisplayedCharCounter(1);
+            gameData.setProgressPB(gameData.getDisplayedCharCounter() * ((double) 1 / gameData.getInsertedText().length()));
+            proBar.setProgress(gameData.getProgressPB());
+            gameData.setTMistLocked(false);
+            if (gameData.getProgressI() == 40 || gameData.getDisplayedCharCounter() == gameData.getInsertedText().length()) { // end of array
+                System.out.println("lol");
+                if(gameData.getDisplayedCharCounter() != gameData.getInsertedText().length()) { // not end of game
+                    gameData.setTextNeedsToUpdate(true);
+                    updateTextLabel(startInsertedChar);
+                    gameData.setTextNeedsToUpdate(false);
+                }
+                gameData.resetProgressI();
             } else {
                 gameData.setTextNeedsToUpdate(false);
-                textNeedsToUpdate = false;
             }
             return true;
         } else {
-            if (!tMistLocked) {
-                typingMistakes++;
+            if (!gameData.getTMistLocked()) {
+                gameData.setTMists(1); // +=1 in GSC
+                System.out.println(gameData.getTMists());
             }
-            tMistLocked = true;
+            gameData.setTMistLocked(true);
             showConfStats();
         }
         return false;
     }
 
     private void checkGameFinished() throws IOException {
-        if (displayedCharCounter == startInsertedTxt.length()) { // user finished typing text
-            gameIsRunning = false;
-            pushToGameData();
+        if (gameData.getDisplayedCharCounter() == gameData.getInsertedText().length()) { // user finished typing text
+            gameData.setGameIsRunning(false);
             Main main = Main.getInstance();
             main.switchScene("game-finished-screen.fxml");
         }
     }
 
     private void updateTextLabel(char[] startInsertedChar) {
-        char[] displayedChar = new char[40];
-        this.displayedCharCounter = gameData.getDisplayedCharCounter();
-        for (int i = 0; i < startInsertedTxt.length() && i < 40; i++) {     // fill array for displaying purposes
-            displayedChar[i] = startInsertedChar[displayedCharCounter];
-            displayedCharCounter++;
-            gameData.setDisplayedCharCounter(displayedCharCounter);
-            if (displayedCharCounter >= startInsertedTxt.length()) {
-                gameIsRunning = false;
-                displayedCharCounter = 0;
+        int counter = gameData.getDisplayedCharCounter();   // counts from displayedCharCounter independently
+        System.out.println("displayedCharCounter (updateTxtLabel):" + gameData.getDisplayedCharCounter());
+        for (int i = 0; i < gameData.getInsertedText().length() && i < 40; i++) {     // fill array for displaying purposes, max 40 chars
+            displayedChar[i] = startInsertedChar[counter];
+            counter++;
+            System.out.println(counter);
+            if (counter > gameData.getInsertedText().length()+1) {
+                System.out.println("counter > textlength");
+                gameData.setGameIsRunning(false);
+                gameData.resetDisplayedCharCounter();
             }
         }
         firstLabel.setText(String.valueOf(displayedChar));
@@ -213,19 +206,19 @@ public class GameScreenController {
     private void showConfStats() {  // things that can be modified in SettingsMenuController.java
         SettingsMenuController sMenCon = SettingsMenuController.getInstance();
         if (sMenCon != null) {
-            showTMist = sMenCon.getTMistState(); // settings data
+            showTMist = sMenCon.getTMistState(); // data from SMC
             showProBar = sMenCon.getProBarState();
         } else {
             showTMist = true;
             showProBar = true;
         }
         if (showTMist) {    // show typing mistakes
-            tMistLabel.setText("Typing mistakes: " + typingMistakes);
+            tMistLabel.setText("Typing mistakes: " + gameData.getTMists());
         } else {
             tMistLabel.setVisible(false);
         }
         if (showProBar) {   // show progress bar
-            proBar.setProgress(progressPB);
+            proBar.setProgress(gameData.getProgressPB());
             proBar.setVisible(true);
         } else {
             proBar.setVisible(false);
@@ -234,27 +227,5 @@ public class GameScreenController {
 
     public static GameScreenController getInstance() {
         return instance;
-    }
-
-    private void pushToGameData() {
-        GameData gameData = GameData.getInstance();
-        gameData.setInsertedText(startInsertedTxt);
-        gameData.setInsertedChar(startInsertedChar);
-        gameData.setKeyInpChar(keyInpChar);
-        gameData.setTMists(typingMistakes);
-        gameData.setProgressI(progressI);
-        gameData.setProgressPB(progressPB);
-        gameData.setDisplayedCharCounter(displayedCharCounter);
-    }
-
-    private void pullFromGameData() {
-        GameData gameData = GameData.getInstance();
-        this.startInsertedTxt = gameData.getInsertedText();
-        this.startInsertedChar = gameData.getInsertedChar();
-        this.keyInpChar = gameData.getKeyInpChar();
-        this.typingMistakes = gameData.getTMists();
-        this.progressI = gameData.getProgressI();
-        this.progressPB = gameData.getProgressPB();
-        this.displayedCharCounter = gameData.getDisplayedCharCounter();
     }
 }
